@@ -1,0 +1,9 @@
+sample:
+  description: NRF52 audio player with PWM output and opus decoding
+    application
+  name: nrf52-pwm-with-opus-player
+common:
+    tags: introduction
+    integration_platforms:
+      - native_posix
+    harness: console
