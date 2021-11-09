@@ -1,4 +1,4 @@
-# NRF52 Audio Player with PWM ouput & opus codec
+# NRF52 Audio Player with PWM output & opus codec
 
 MORE INFO HERE!
 
@@ -17,7 +17,7 @@ In order to play your file via the PWM, it mus be converted into a c file.
 
 2. Convert the raw soundfile into a C file
 
-   `# ./bin2c -o soundfile.h -name "soundfile" soundfile.raw` 
+   `# ./bin2c -o soundfile.h -name "soundfile" soundfile.opus` 
 
 3. Use it inside your C project
 
@@ -39,4 +39,4 @@ Requirements
 
 3. Convert the soundfile into a C file
 
-   `# 
+   `# ./bin2c -o audiofile.h -name "audiofile" audiofile.opus`
