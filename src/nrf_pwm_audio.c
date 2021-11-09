@@ -37,7 +37,6 @@
 // *******************************************************************************************************************
 
 #include "nrf_pwm_audio.h"
-#include "opusfile.h"
 #include <hal/nrf_gpio.h>
 
 
@@ -289,35 +288,6 @@ nrfx_err_t nrf_pwm_audio_playback(uint8_t const *pcm_data, size_t pcm_data_lengt
   m_pcm_data_read_idx= 0;
   m_num_repeat_left= num_repeat;
   m_num_sample_left= pcm_data_length;
-
-  m_pwm_playback_in_progress= true;
-
-  nrfx_pwm_complex_playback(&m_pwm, &m_pwm_seqs[0], &m_pwm_seqs[1], 1, NRFX_PWM_FLAG_SIGNAL_END_SEQ0 | NRFX_PWM_FLAG_SIGNAL_END_SEQ1 | NRFX_PWM_FLAG_LOOP);
-
-  return NRFX_SUCCESS;
-}
-
-nrfx_err_t nrf_pwm_audio_playback_opus(uint8_t const *opus_data, size_t opus_data_length, nrf_pwm_audio_samplerate_t samplerate, float gain, size_t num_repeat)
-{
-  if (!m_pwm_initialized) { return NRFX_ERROR_INTERNAL; }
-
-  int err;
-  OggOpusFile * oggFile = op_open_memory(opus_data, opus_data_length, &err);
-    if (err == 0) {
-        printk("open opus file worked!\n");
-    } else {
-        printk("error during opus file opening: %d\n", err);
-    }
-
-  //m_pcm_data= pcm_data;
-  //m_pcm_data_length= pcm_data_length;
-  m_upsample= samplerate;
-  m_gain= gain;
-  m_num_repeat= num_repeat;
-
-  m_pcm_data_read_idx= 0;
-  m_num_repeat_left= num_repeat;
-  //m_num_sample_left= pcm_data_length;
 
   m_pwm_playback_in_progress= true;
 

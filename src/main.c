@@ -11,8 +11,6 @@
 #include "nrftalk_raw.h"
 #include "nrf_pwm_audio.h"
 
-#include "audio_opus_file_decoder.h"
-
 #include <logging/log.h>
 LOG_MODULE_REGISTER(main, CONFIG_LOG_DEFAULT_LEVEL);
 
@@ -42,8 +40,6 @@ void main(void) {
 
 	IRQ_DIRECT_CONNECT(PWM0_IRQn, 0, nrfx_pwm_0_irq_handler, 0);
 	nrf_pwm_audio_init(HANK_PIN, false);
-
-	play();
 
 	ledOn(true);
 	nrf_pwm_audio_playback(nrfistalking_raw_11kHz, nrfistalking_raw_11kHz_size, NRF_PWM_AUDIO_SAMPLERATE_16K, 1.0, 0);
