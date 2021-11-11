@@ -3,21 +3,21 @@
         {
             "name": "NRF52V1.7",
             "includePath": [
-                "${default}",
-                "${workspaceFolder}/lib/opus-1.2.1",
+                "${workspaceFolder}/lib/sbc-1.5/sbc/**",
                 "/opt/nordic/ncs/v1.7.0/zephyr/include",
                 "/opt/nordic/ncs/v1.7.0/zephyr/include/**",
                 "/opt/nordic/ncs/v1.7.0/nrf/include/",
                 "/opt/nordic/ncs/v1.7.0/nrf/include/**",
                 "/opt/nordic/ncs/v1.7.0/modules/hal/nordic/nrfx/drivers/include",
+                "/opt/nordic/ncs/v1.7.0/modules/hal/nordic/nrfx",
                 "/opt/nordic/ncs/v1.7.0/modules/hal/nordic/nrfx/hal",
                 "/opt/nordic/ncs/v1.7.0/modules/hal/nordic/nrfx/drivers/include/**",
-                "${workspaceFolder}/build/zephyr/include/generated"
+                "${workspaceFolder}/build/zephyr/include/generated",
+                "/opt/nordic/ncs/v1.7.0/modules/hal/nordic/nrfx"
             ],
-            "compilerPath": "/usr/bin/clang",
+            "compilerPath": "/opt/nordic/ncs/v1.7.0/toolchain/bin/arm-none-eabi-g++",
             "cStandard": "c17",
-            "cppStandard": "c++98",
-            "configurationProvider": "nrf-connect"
+            "cppStandard": "c++98"
         }
     ],
     "version": 4

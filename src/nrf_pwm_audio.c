@@ -66,7 +66,6 @@ size_t static m_pcm_data_read_idx= 0;                                       ///<
 size_t static m_num_sample_left= 0;                                         ///< PCM values left to be processed
 
 
-
 // *******************************************************************************************************************
 // Module internal functions
 // *******************************************************************************************************************
@@ -99,7 +98,7 @@ size_t static pcm_to_pwm(uint16_t *pwm_seq_buffer, int8_t const *pcm_buffer, siz
     }
     else
     {
-      sample= 0;
+      sample= 1.0f;
     }
 
     if ((sample > -1.0f) && (sample < 1.0f))
