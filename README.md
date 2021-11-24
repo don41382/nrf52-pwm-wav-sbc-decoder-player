@@ -1,4 +1,4 @@
-# NRF52 Audio Player with PWM output & opus codec
+# NRF52 Audio Player with PWM output & sbc codec
 
 MORE INFO HERE!
 
