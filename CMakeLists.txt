@@ -3,20 +3,22 @@
 cmake_minimum_required(VERSION 3.20.0)
 
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
-project(nrf52-pwm-with-opus-player)
-
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} \
-")
+project(nrf52-pwm-wav-sbc-decoder-player)
 
 target_sources(app PRIVATE
   lib/sbc-1.5/sbc/sbc_primitives.c
   lib/sbc-1.5/sbc/sbc.c
 
-  src/nrf_pwm_audio.c
-  src/main.c
+  src/audio/SbcPWMPlayer.cpp
+  src/main.cpp
 )
+
+target_link_libraries(app PRIVATE
+	stdc++
+	)
 
 zephyr_include_directories(
   lib/sbc-1.5/sbc
+  src/audio
   src
 )
