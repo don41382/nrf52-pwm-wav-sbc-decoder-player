@@ -15,6 +15,6 @@ class AudioDecoder {
             this->rawLength = length;
             this->rawIdx = 0;
         }
-        virtual size_t decode(unsigned char * buffer, size_t bufferLength);
+        virtual int decode(unsigned char * buffer, size_t bufferLength);
         void reset() { this->rawIdx = 0; }
 };

@@ -13,9 +13,9 @@ target_sources(app PRIVATE
   src/main.cpp
 )
 
-target_link_libraries(app PRIVATE
-	stdc++
-	)
+# target_link_libraries(app PRIVATE
+# 	stdc++
+# 	)
 
 zephyr_include_directories(
   lib/sbc-1.5/sbc

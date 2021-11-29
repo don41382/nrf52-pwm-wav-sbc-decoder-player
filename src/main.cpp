@@ -24,7 +24,7 @@ LOG_MODULE_REGISTER(main, CONFIG_LOG_DEFAULT_LEVEL);
 #define LED_PIN     DT_GPIO_PIN(LED0_NODE, gpios)
 #define LED_FLAGS   DT_GPIO_FLAGS(LED0_NODE, gpios)
 
-#define AUDIO_PIN NRF_GPIO_PIN_MAP(0,15)
+#define AUDIO_PIN NRF_GPIO_PIN_MAP(0,13)
 
 void ledInit() {
 	const struct device *dev = device_get_binding(LED0);	
@@ -47,7 +47,7 @@ extern "C" void main(void) {
 
 	player.init(AUDIO_PIN);
 	player.play(&sbcDecoder, AudioSampleRate::SAMPLERATE_16K);
-	
+
 	while(player.isPlaying()) { __WFE(); }
 	ledOn(false);
 

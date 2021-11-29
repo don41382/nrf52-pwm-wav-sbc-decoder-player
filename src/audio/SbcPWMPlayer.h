@@ -43,6 +43,7 @@ class SbcPWMPlayer {
         bool isPlaying();
 
         void stop();
+        static void pwm_buffer_filler(nrfx_pwm_evt_type_t event_type, void * p_context);
 
         void fillSequenceBuffer(uint8_t sequenceId);
         void destory();

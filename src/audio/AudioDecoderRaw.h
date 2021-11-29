@@ -8,7 +8,7 @@
 class AudioDecoderRaw : public AudioDecoder {
     using AudioDecoder::AudioDecoder;
     public:
-        size_t decode(unsigned char * buffer, size_t length) override {
+        int decode(unsigned char * buffer, size_t length) override {
             uint16_t maxLength;
             if (length > this->rawLength - this->rawIdx) {
                 maxLength = max((int)this->rawLength - this->rawIdx, 0);

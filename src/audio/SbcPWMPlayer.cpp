@@ -1,10 +1,9 @@
 #include <zephyr.h>
 #include <nrfx.h>
-#include <vector>
 
 #include "SbcPWMPlayer.h"
 
-static void pwm_buffer_filler(nrfx_pwm_evt_type_t event_type, void * p_context) {
+void SbcPWMPlayer::pwm_buffer_filler(nrfx_pwm_evt_type_t event_type, void * p_context) {
     SbcPWMPlayer * player = (SbcPWMPlayer *)p_context;
     switch (event_type) {
         case NRFX_PWM_EVT_END_SEQ0:
@@ -20,8 +19,8 @@ static void pwm_buffer_filler(nrfx_pwm_evt_type_t event_type, void * p_context) 
 
 nrfx_err_t SbcPWMPlayer::init(uint8_t pwmPin) {
 
-    nrfx_pwm_config_t const pwm_config= {
-        .output_pins  = { (uint8_t) (pwmPin | NRFX_PWM_PIN_INVERTED),
+    nrfx_pwm_config_t pwm_config= {
+        .output_pins  = { pwmPin,
                             NRFX_PWM_PIN_NOT_USED,
                             NRFX_PWM_PIN_NOT_USED,
                             NRFX_PWM_PIN_NOT_USED },
@@ -33,9 +32,8 @@ nrfx_err_t SbcPWMPlayer::init(uint8_t pwmPin) {
         .step_mode    = NRF_PWM_STEP_AUTO      
     };
 
-    nrfx_err_t retCode = nrfx_pwm_init(&m_pwm, &pwm_config, &pwm_buffer_filler, this);
+    nrfx_err_t retCode = nrfx_pwm_init(&m_pwm, &pwm_config, pwm_buffer_filler, this);
     if (NRFX_SUCCESS != retCode) { return retCode; }
-
     this->initSequences();
 
     return NRFX_SUCCESS;
@@ -52,7 +50,7 @@ void SbcPWMPlayer::initSequences() {
 
 uint16_t pcm2pwm(unsigned char pcm, float gain) {
     float sample= ((float) (int8_t)pcm) * (gain / 128.0f);
-
+    
     if ((sample > -1.0f) && (sample < 1.0f)) {
         return (uint16_t) ((sample+1.0f) * ((float) NRF_PWM_AUDIO_COUNTERTOP) / 2.0f);
     } else if (sample == 0) {
@@ -67,11 +65,11 @@ uint16_t pcm2pwm(unsigned char pcm, float gain) {
 }
 
 void SbcPWMPlayer::fillSequenceBuffer(uint8_t sequenceId) {
-    size_t srf = (size_t) sampleRate;
-    size_t readSize = decoder->decode(decoderBuffer, NRF_PWM_AUDIO_BUFFER_LENGTH / srf);
-            
+    int srf = sampleRate;
+    int readSize = decoder->decode(decoderBuffer, NRF_PWM_AUDIO_BUFFER_LENGTH / srf);
+    
     if (readSize > 0) {
-        for (size_t i=0; i<NRF_PWM_AUDIO_BUFFER_LENGTH; ++i) {
+        for (int i=0; i<NRF_PWM_AUDIO_BUFFER_LENGTH; ++i) {
             if ((i/srf) < readSize) {
                 pwmSeqBuffer[sequenceId][i] = pcm2pwm(decoderBuffer[i / srf], 4.0);
             } else {

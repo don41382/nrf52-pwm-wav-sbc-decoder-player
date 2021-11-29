@@ -28,7 +28,7 @@ class AudioDecoderSbc : public AudioDecoder {
             sbc.endian = SBC_BE;
         };
         
-        size_t decode(unsigned char * pcmOut, size_t pcmOutSize) override {
+        int decode(unsigned char * pcmOut, size_t pcmOutSize) override {
             if (this->rawIdx < (uint16_t) this->rawLength) {
                 size_t totalWritten = 0;
                 ssize_t framelen = 0;

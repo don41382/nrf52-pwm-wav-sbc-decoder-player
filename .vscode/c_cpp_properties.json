@@ -22,7 +22,8 @@
             "cppStandard": "c++11",
             "browse": {
                 "limitSymbolsToIncludedHeaders": true
-            }
+            },
+            "configurationProvider": "nrf-connect"
         }
     ],
     "version": 4
