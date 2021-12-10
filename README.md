@@ -1,42 +1,45 @@
-# NRF52 Audio Player with PWM output & opus codec
+# NRF52 Audio Player with PWM output for raw wav & sbc codec files
 
-MORE INFO HERE!
+This project allows you to playback *raw wave* and *sbc encoded* audio files via PWM output on NRF52 chips. It can also easily extended to add other decoders of your choice.
 
-## Raw 8-bit PCM (no compression)
+- Build on the latest [NRF connect SDK 1.7.0](https://developer.nordicsemi.com/nRF_Connect_SDK/doc/1.7.0/)
+- Supported is a sampling rate up to 32kHz and 8-bit resolution
+- C++ is used
 
-Requirements
+For testing, you can connect your headphone to the PWM output. In order to connect a speaker, you'll need an amplifier. A simple Class D Amplifier did the job for [me](https://siliconjunction.wordpress.com/2017/02/28/class-d-amplifier-for-the-arduino/).
+
+A big thanks goes to Tamas Harczos. His initial [repository](https://sourceforge.net/u/newtom/profile/) helped me tones to make this working.
+
+## Deployment
+
+### Pre-Requirements
+
+- latest NRF connect SDK 1.7.0
+- NRF52 module with [PWM support](https://infocenter.nordicsemi.com/index.jsp?topic=%2Fstruct_nrf52%2Fstruct%2Fnrf52.html) (I worked with the [NRF52840 Dongle](https://www.nordicsemi.com/Products/Development-hardware/nrf52840-dongle))
+
+### Run
+
+1. Checkout the repository
+
+   `git clone git@github.com:don41382/nrf52-pwm-wav-sbc-decoder-player.git`
+
+2. Build & flash with west
+
+   `west flash`
+
+## Encoding your Audio
+
+I created a simple bash script (`files/decode.sh`) which helps you to convert your audio files into C header files.
+
+### Required Installed Libraries
 
 - [ffmpeg](https://ffmpeg.org/)
 - [bin2c](https://sourceforge.net/projects/bin2c/)
 
-In order to play your file via the PWM, it mus be converted into a c file.
+### Encode your files
 
-1. Convert your soundfile into a signed raw 8-bit PCM
-   
-   `# ffmpeg -i soundfile.mp3 -ar 15625 -f s8 soundfile.raw`
+```
+# cd files
+# ./decode itsworking.wav
+```
 
-2. Convert the raw soundfile into a C file
-
-   `# ./bin2c -o soundfile.h -name "soundfile" soundfile.opus` 
-
-3. Use it inside your C project
-
-## Opus (no compression)
-
-Requirements
-
-- [ffmpeg](https://ffmpeg.org/)
-- [opus-tools](https://opus-codec.org/downloads/) (optional)
-- [bin2c](https://sourceforge.net/projects/bin2c/)
-
-1. Convert your soundfile into a wave file
-
-   `# ffmpeg -i soundfile.mp3 soundfile.wav`
-
-2. Encode your soundfile to a opus file. The `bitrate` and `framesize` have to match your decoder settings (`AUDIO_BITRATE_LIMIT` and `AUDIO_FRAME_SIZE_MS`)
-
-   `# opusenc audiofile.wav audiofile.opus --bitrate 32 --framesize 5 --downmix-mono --discard-comments --discard-pictures`
-
-3. Convert the soundfile into a C file
-
-   `# ./bin2c -o audiofile.h -name "audiofile" audiofile.opus`

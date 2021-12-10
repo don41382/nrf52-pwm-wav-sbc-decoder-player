@@ -2,5 +2,8 @@
     "cmake.configureOnOpen": false,
     "nrf-connect.applications": [
         "${workspaceFolder}"
-    ]
+    ],
+    "files.associations": {
+        "array": "cpp"
+    }
 }

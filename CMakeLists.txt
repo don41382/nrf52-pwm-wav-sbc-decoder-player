@@ -9,13 +9,9 @@ target_sources(app PRIVATE
   lib/sbc-1.5/sbc/sbc_primitives.c
   lib/sbc-1.5/sbc/sbc.c
 
-  src/audio/SbcPWMPlayer.cpp
+  src/audio/PWMPlayer.cpp
   src/main.cpp
 )
-
-# target_link_libraries(app PRIVATE
-# 	stdc++
-# 	)
 
 zephyr_include_directories(
   lib/sbc-1.5/sbc

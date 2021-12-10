@@ -1,5 +1,5 @@
 sample:
-  description: NRF52 audio player with PWM output and opus decoding
+  description: NRF52 audio player with PWM output and sbc decoding
     application
   name: nrf52-pwm-with-opus-player
 common:

@@ -19,11 +19,10 @@
             ],
             "compilerPath": "/opt/nordic/ncs/v1.7.0/toolchain/bin/arm-none-eabi-g++",
             "cStandard": "c17",
-            "cppStandard": "c++11",
+            "cppStandard": "c++17",
             "browse": {
                 "limitSymbolsToIncludedHeaders": true
-            },
-            "configurationProvider": "nrf-connect"
+            }
         }
     ],
     "version": 4
