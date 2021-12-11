@@ -1,20 +1,13 @@
 #include <zephyr.h>
-#include <device.h>
-#include <devicetree.h>
-#include <irq.h>
-#include <nrf_erratas.h>
 
-#include <drivers/gpio.h>
-#include <nrfx_pwm.h>
 #include <hal/nrf_gpio.h>
 
 #include "audio/PWMPlayer.h"
+#include "audio/AudioDecoderSbc.h"
+#include "audio/AudioDecoderRaw.h"
 
 #include "samples/sample_hit_raw.h"
 #include "samples/sample_itsworking_sbc.h"
-
-#include "audio/AudioDecoderSbc.h"
-#include "audio/AudioDecoderRaw.h"
 
 #include <logging/log.h>
 LOG_MODULE_REGISTER(main, CONFIG_LOG_DEFAULT_LEVEL);
@@ -22,14 +15,14 @@ LOG_MODULE_REGISTER(main, CONFIG_LOG_DEFAULT_LEVEL);
 #define AUDIO_PIN NRF_GPIO_PIN_MAP(0,13)
 
 void playRaw(PWMPlayer * player, const unsigned char * data, size_t size) {
-	AudioDecoderRaw sbcDecoder(data, size, SAMPLERATE_16K);
-	player->play(&sbcDecoder, 2.0);
+	AudioDecoderRaw decoder(data, size, SAMPLERATE_16K);
+	player->play(&decoder, 2.0);
 	while(player->isPlaying()) { __WFE(); }
 }
 
 void playSbc(PWMPlayer * player, const unsigned char * data, size_t size) {
-	AudioDecoderSbc sbcDecoder(data, size);
-	player->play(&sbcDecoder, 2.0);
+	AudioDecoderSbc decoder(data, size);
+	player->play(&decoder, 2.0);
 	while(player->isPlaying()) { __WFE(); }
 }
 
