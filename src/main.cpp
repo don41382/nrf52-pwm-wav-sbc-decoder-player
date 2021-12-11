@@ -10,9 +10,8 @@
 
 #include "audio/PWMPlayer.h"
 
-#include "samples/hit.h"
-#include "samples/itsworking.h"
-#include "samples/liftup.h"
+#include "samples/sample_hit_raw.h"
+#include "samples/sample_itsworking_sbc.h"
 
 #include "audio/AudioDecoderSbc.h"
 #include "audio/AudioDecoderRaw.h"
@@ -22,11 +21,18 @@ LOG_MODULE_REGISTER(main, CONFIG_LOG_DEFAULT_LEVEL);
 
 #define AUDIO_PIN NRF_GPIO_PIN_MAP(0,13)
 
-void play(PWMPlayer * player, const unsigned char * data, size_t size) {
-	AudioDecoderSbc sbcDecoder(data, size);
-	player->play(&sbcDecoder, AudioSampleRate::SAMPLERATE_16K);
+void playRaw(PWMPlayer * player, const unsigned char * data, size_t size) {
+	AudioDecoderRaw sbcDecoder(data, size, SAMPLERATE_16K);
+	player->play(&sbcDecoder, 2.0);
 	while(player->isPlaying()) { __WFE(); }
 }
+
+void playSbc(PWMPlayer * player, const unsigned char * data, size_t size) {
+	AudioDecoderSbc sbcDecoder(data, size);
+	player->play(&sbcDecoder, 2.0);
+	while(player->isPlaying()) { __WFE(); }
+}
+
 
 extern "C" void main(void) {
 	LOG_INF("Playback time!!");
@@ -35,8 +41,8 @@ extern "C" void main(void) {
 	PWMPlayer player;
 	player.init(AUDIO_PIN);
 
-	play(&player, hit, hit_size);
-	play(&player, itsworking, itsworking_size);
+	playRaw(&player, sample_hit_raw, sample_hit_raw_size);
+	playSbc(&player, sample_itsworking_sbc, sample_itsworking_sbc_size);
 	player.destory();
 	
   	while (1) {

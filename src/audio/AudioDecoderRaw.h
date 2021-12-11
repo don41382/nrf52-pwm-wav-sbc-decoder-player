@@ -17,7 +17,7 @@ class AudioDecoderRaw : public AudioDecoder {
             } else {
                 *totalDecoded = length;
             }
-            memcpy(buffer, this->rawData, *totalDecoded);
+            memcpy(buffer, this->rawData + this->rawIdx, *totalDecoded);
             this->rawIdx += *totalDecoded;
             return SUCCESS;
         };

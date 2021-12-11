@@ -50,7 +50,7 @@ void PWMPlayer::initSequences() {
 }
 
 uint16_t pcm2pwm(unsigned char pcm, float gain) {
-    float sample= 0.0f;//((float) (int8_t)pcm) * (gain / 128.0f);
+    float sample= ((float) (int8_t)pcm) * (gain / 128.0f);
     
     if ((sample > -1.0f) && (sample < 1.0f)) {
         return (uint16_t) ((sample+1.0f) * ((float) NRF_PWM_AUDIO_COUNTERTOP) / 2.0f);
@@ -84,11 +84,11 @@ void PWMPlayer::fillSequenceBuffer(uint8_t sequenceId) {
             for (int i=0; i<NRF_PWM_AUDIO_BUFFER_LENGTH; i++) {
                 pwmSeqBuffer[sequenceId][i] = NRF_PWM_AUDIO_COUNTERTOP;
             }
-            stop(true);
+            stop(false);
         }
     } else {
         printf("error %d, while decoding frame\n", res);
-        stop(true);
+        stop(false);
     }
 }
 
