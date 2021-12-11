@@ -23,9 +23,12 @@ A big thanks goes to Tamas Harczos. His initial [repository](https://sourceforge
 
    `git clone git@github.com:don41382/nrf52-pwm-wav-sbc-decoder-player.git`
 
-2. Build & flash with west
+2. Build & flash with west (with my nrf52840 dongle)
 
-   `west flash`
+   ```
+   # west build --board nrf52840dongle_nrf52840
+   # west flash --softreset
+   ```
 
 ## Encoding your Audio
 
